@@ -5,7 +5,9 @@ import "./globals.css";
 import '@interchain-ui/react/styles';
 import { ChainProvider } from '@cosmos-kit/react';
 import { chains, assets } from 'chain-registry';
-// import { wallets } from '@cosmos-kit/keplr';
+import { wallets as keplrWallets  } from '@cosmos-kit/keplr';
+import { wallets as compassWallets } from "@cosmos-kit/compass";
+import { wallets as leapWallets } from "@cosmos-kit/leap";
 import { SignerOptions, wallets } from 'cosmos-kit';
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,8 +24,8 @@ export default function RootLayout({ children }) {
         <ChainProvider
           chains={chains} // supported chains
           assetLists={assets} // supported asset lists
-          wallets={wallets} // supported wallets
-          // walletConnectOptions={...} // required if `wallets` contains mobile wallets
+          wallets={[...keplrWallets, ...compassWallets, ...leapWallets]} // supported wallets
+          throwErrors={false}
           walletConnectOptions={{
             signClient: {
               projectId: 'a8510432ebb71e6948cfd6cde54b70f7',
@@ -32,7 +34,9 @@ export default function RootLayout({ children }) {
                 name: 'CosmosKit Template',
                 description: 'CosmosKit dapp template',
                 url: 'https://docs.cosmology.zone/cosmos-kit/',
-                icons: [],
+                icons: [
+                  "https://raw.githubusercontent.com/cosmology-tech/cosmos-kit/main/packages/docs/public/favicon-96x96.png",
+                ]
               },
             },
           }}
